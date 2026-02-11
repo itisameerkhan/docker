@@ -79,3 +79,19 @@ A Docker container is a lightweight, isolated, and runnable instance of a Docker
 | Status             | Stopped          | hello-world runs once and exits                         |
 | ▶ Button           | Start container  | Starts container again                                  |
 | 🗑 Button          | Delete container | Removes container permanently                           |
+
+---
+
+## ⭐ list files in docker
+
+```cmd
+docker ps
+```
+
+list only the currently running containers on your system. If a container has stopped or exited, it will not appear in this list.
+
+```cmd
+docker ps -a
+```
+
+list all containers on your system, including those that are stopped or exited.
