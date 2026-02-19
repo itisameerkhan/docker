@@ -23,6 +23,26 @@ A Docker image is like a frozen pizza you buy from a supermarket. The frozen piz
 
 ![demo](../assets/demo2.png)
 
+## ⭐ Why do we need Containers?
+
+We need containers in software development to solve the problem of “it works on my machine.” Containers package an application along with all its dependencies, libraries, and configurations into a single portable unit. This ensures the application runs consistently across development, testing, and production environments. Containers are lightweight, fast, and efficient compared to traditional virtual machines, making them ideal for modern cloud-based and microservices architectures.
+
+## ⭐ Bare Metal vs VM vs Containers
+
+| Feature        | Bare Metal               | VM                     | Container         |
+| -------------- | ------------------------ | ---------------------- | ----------------- |
+| Performance    | ⭐⭐⭐⭐⭐                    | ⭐⭐⭐                    | ⭐⭐⭐⭐              |
+| Isolation      | ❌ Low                    | ✅ High                 | ✅ Medium          |
+| Resource Usage | Full Hardware            | Heavy                  | Lightweight       |
+| Startup Time   | Minutes                  | Minutes                | Seconds           |
+| Best For       | High performance systems | Enterprise legacy apps | Cloud-native apps |
+
+## ⭐ Docker and OCI
+
+Docker is a platform that allows developers to package applications along with all their dependencies into containers, so they can run consistently across different environments like development, testing, and production. It simplifies application deployment and improves portability.
+
+The Open Container Initiative (OCI) is an industry body under the Linux Foundation that defines open standards for container image formats and runtimes. It ensures that containers created by one tool (like Docker) can run on other compatible platforms without issues, avoiding vendor lock-in and improving interoperability.
+
 ## ⭐ Docker Commands
 
 ### ⚡ Pull Image
