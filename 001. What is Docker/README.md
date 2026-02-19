@@ -43,6 +43,18 @@ Docker is a platform that allows developers to package applications along with a
 
 The Open Container Initiative (OCI) is an industry body under the Linux Foundation that defines open standards for container image formats and runtimes. It ensures that containers created by one tool (like Docker) can run on other compatible platforms without issues, avoiding vendor lock-in and improving interoperability.
 
+| Criteria              | Bare Metal | Virtual Machine | Container |
+| --------------------- | ---------- | --------------- | --------- |
+| Dependency Management | 🔴 Poor    | 🟢 Good         | 🟢 Good   |
+| Utilization           | 🔴 Poor    | 🟡 Medium       | 🟢 Good   |
+| Isolation             | 🟢 Good    | 🟢 Good         | 🟡 Medium |
+| Start Up Speed        | 🔴 Slow    | 🟡 Medium       | 🟢 Fast   |
+| Dev / Prod Parity     | 🔴 Poor    | 🟡 Medium       | 🟢 Good   |
+| Control               | 🟢 High    | 🟡 Medium       | 🟡 Medium |
+| Performance           | See note   | See note        | See note  |
+| Operational Overhead  | 🔴 High    | 🟡 Medium       | 🟢 Low    |
+
+
 ## ⭐ Docker Commands
 
 ### ⚡ Pull Image
