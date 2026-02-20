@@ -64,3 +64,27 @@ cd my-volume/_data
 
 > [!IMPORTANT]
 >You cannot mount a volume to an already running container. Docker does NOT allow adding volumes after a container is created.
+
+## ⭐ Bind Mount
+
+A bind mount is a way to connect a folder from your host machine directly into a container. Instead of Docker managing the storage (like volumes), the host’s existing directory is mounted into the container.
+
+**Bind mount = share a real folder from your computer with the container.**
+
+```cmd
+docker run -it --rm --mount type=bind,source="${PWD}"/my-data,destination=/my-data ubuntu:22.04
+
+cd my-data
+
+echo "hello from host" >> demo.txt
+
+exit
+```
+
+shorter syntax
+
+```cmd
+docker run -it --rm -v "${PWD}"/my-data:/my-data ubuntu:22.04
+```
+
+![demo](../assets/demo45.png)
