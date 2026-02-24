@@ -400,6 +400,7 @@ docker run --rm --name this-one-will-be-gone ubuntu
 docker run -d \
 --name mongo \
 --network my-network
+-v my-volume:data/db \
 -p 27017:27017 \
 mongo
 ```
@@ -426,3 +427,84 @@ docker run -d \
 -e VITE_NODE_URL=http://localhost:8080 \
 client-react
 ```
+
+# ⭐ Docker Compose 
+
+Docker Compose is a tool that allows you to run and manage multiple containers together using a single configuration file (`docker-compose.yml`). Instead of running many docker run commands manually for MongoDB, Node.js, and React, you define everything in one YAML file and start the entire application with one command.
+
+In normal Docker usage, you manually create a network, start Mongo, then start backend, then start frontend. With Docker Compose, Docker automatically creates a network, connects containers, manages environment variables, volumes, and dependencies. It is mainly used for full-stack applications like your MERN project because it keeps everything organized and easy to manage.
+
+```dockerfile
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-volume:/data/db
+  
+  api-node:
+    build: ./Backend
+    container_name: api-node-container
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - MONGODB_URI=mongodb://mongo:27017/users
+    depends_on:
+      - mongo
+
+  client-react:
+    build: ./Frontend
+    container_name: client-react-container
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_NODE_URL=http://localhost:8080
+    depends_on:
+      - api-node
+    
+volumes:
+  mongo-volume:
+```
+
+![demo](../assets/demo57.png)
+
+---
+
+### ⚡ Docker compose field reference table 
+
+| Key              | Purpose                          | Example                       | Explanation                                           |
+| ---------------- | -------------------------------- | ----------------------------- | ----------------------------------------------------- |
+| `container_name` | Custom name for container        | `container_name: api-node`    | Instead of random name, it gives fixed container name |
+| `image`          | Image to use                     | `image: node:20`              | Pulls image from Docker Hub                           |
+| `build`          | Build image from Dockerfile      | `build: .`                    | Builds image from current directory                   |
+| `ports`          | Map host port to container port  | `ports: - "8080:3000"`        | Host 8080 → Container 3000                            |
+| `depends_on`     | Start dependency container first | `depends_on: - mongo`         | Ensures mongo starts before app                       |
+| `environment`    | Set environment variables        | `environment: - PORT=3000`    | Sets env variables inside container                   |
+| `env_file`       | Load environment file            | `env_file: .env`              | Loads variables from .env file                        |
+| `volumes`        | Mount volume or bind mount       | `volumes: - ./data:/app/data` | Sync host folder to container                         |
+| `restart`        | Restart policy                   | `restart: always`             | Auto restart if container crashes                     |
+| `command`        | Override default CMD             | `command: npm start`          | Runs specific command                                 |
+| `networks`       | Custom network config            | `networks: - app-network`     | Connect containers in same network                    |
+| `stdin_open`     | Keep STDIN open                  | `stdin_open: true`            | Like `-i` in docker run                               |
+| `tty`            | Allocate terminal                | `tty: true`                   | Like `-t` in docker run                               |
+| `healthcheck`    | Check container health           | `healthcheck:`                | Defines health status check                           |
+
+
+---
+
+### ⚡ Docker Compose Commands
+
+| Command                  | Purpose                    |
+| ------------------------ | -------------------------- |
+| `docker compose up`      | Start containers           |
+| `docker compose up -d`   | Start in detached mode     |
+| `docker compose down`    | Stop and remove containers |
+| `docker compose build`   | Build images               |
+| `docker compose ps`      | List running services      |
+| `docker compose logs`    | View logs                  |
+| `docker compose restart` | Restart services           |
+| `docker compose stop`    | Stop services              |
+| `docker compose start`   | Start stopped services     |
