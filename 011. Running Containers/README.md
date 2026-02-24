@@ -430,6 +430,8 @@ client-react
 
 # ⭐ Docker Compose 
 
+![demo](https://cdn.hashnode.com/res/hashnode/image/upload/v1662313547352/s0Uk-haLQ.jpg)
+
 Docker Compose is a tool that allows you to run and manage multiple containers together using a single configuration file (`docker-compose.yml`). Instead of running many docker run commands manually for MongoDB, Node.js, and React, you define everything in one YAML file and start the entire application with one command.
 
 In normal Docker usage, you manually create a network, start Mongo, then start backend, then start frontend. With Docker Compose, Docker automatically creates a network, connects containers, manages environment variables, volumes, and dependencies. It is mainly used for full-stack applications like your MERN project because it keeps everything organized and easy to manage.
@@ -443,6 +445,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo-volume:/data/db
+    networks:
+      - backend
   
   api-node:
     build: ./Backend
@@ -452,6 +456,8 @@ services:
     environment:
       - PORT=8080
       - MONGODB_URI=mongodb://mongo:27017/users
+    networks:
+      - backend
     depends_on:
       - mongo
 
@@ -462,11 +468,16 @@ services:
       - "5173:5173"
     environment:
       - VITE_NODE_URL=http://localhost:8080
+    networks:
+      - frontend
     depends_on:
       - api-node
     
 volumes:
   mongo-volume:
+networks:
+  frontend:
+  backend:
 ```
 
 ![demo](../assets/demo57.png)
