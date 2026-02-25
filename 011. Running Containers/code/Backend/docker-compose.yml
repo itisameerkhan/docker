@@ -1,0 +1,41 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-volume:/data/db
+    networks:
+      - backend
+  
+  api-node:
+    build: ./Backend
+    container_name: api-node-container
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - MONGODB_URI=mongodb://mongo:27017/users
+    networks:
+      - backend
+    depends_on:
+      - mongo
+
+  client-react:
+    build: ./Frontend
+    container_name: client-react-container
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_NODE_URL=http://localhost:8080
+    networks:
+      - frontend
+    depends_on:
+      - api-node
+    
+volumes:
+  mongo-volume:
+networks:
+  frontend:
+  backend:
