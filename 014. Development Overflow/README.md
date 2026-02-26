@@ -283,4 +283,3 @@ services:
 volumes:
   mongo-volume:
 ```
-
