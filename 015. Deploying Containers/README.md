@@ -39,3 +39,4 @@ Important points about Docker Swarm:
   - Add secrets (+ read secrets from file)
 - Build + push images to docker hub
 - Deploy stack
+
